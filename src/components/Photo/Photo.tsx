@@ -1,4 +1,4 @@
-import type { Photo as PhotoType } from '../../App'
+import type { Photo as PhotoType } from '../../usePhotos'
 import './Photo.css'
 
 type PhotoProps = PhotoType & {

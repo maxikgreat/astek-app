@@ -1,6 +1,6 @@
 import './Modal.css'
 import { useEffect } from 'react'
-import type { Photo } from '../../App'
+import type { Photo } from '../../usePhotos'
 
 type ModalProps = Photo & {
   onClose: VoidFunction

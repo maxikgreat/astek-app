@@ -1,49 +1,16 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Photo, Modal } from './components'
+import { Photo as PhotoType, usePhotos } from './usePhotos'
 
 import './App.css'
 
-export type Photo = {
-  albumId: number
-  id: number
-  title: string
-  url: string
-  thumbnailUrl: string
-}
-
-type PhotosState = {
-  error?: string
-  data: Photo[]
-  loading: boolean
-}
-
 function App() {
   const [searchQuery, setSearchQuery] = useState('')
-  const [{ loading, data, error }, setPhotos] = useState<PhotosState>({
-    data: [],
-    loading: true,
-  })
-  const [detailedPhoto, setDetailedPhoto] = useState<Photo>()
+  const [detailedPhoto, setDetailedPhoto] = useState<PhotoType>()
+  const { loading, data, error, fetch } = usePhotos()
 
   useEffect(() => {
-    const apiUrl = import.meta.env.VITE_API_URL
-
-    fetch(`${apiUrl}/albums/1/photos`)
-      .then((response) => response.json())
-      .then((data: Photo[]) =>
-        setPhotos({
-          data,
-          loading: false,
-          error: undefined,
-        }),
-      )
-      .catch((error: { message?: string }) =>
-        setPhotos({
-          loading: false,
-          error: error?.message,
-          data: [],
-        }),
-      )
+    fetch()
   }, [])
 
   const photos = useMemo(
